@@ -1,11 +1,16 @@
 package com.example.zack.week2test;
 
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.Random;
 
 //Coding test: 1. Create an application that generates a random number and updates
 // the textview with that number. The random number generation will be done in a separate thread.
@@ -29,10 +34,27 @@ public class MainActivity extends AppCompatActivity {
         validateEmailAddress("zwrprogmail");
     }
 
+    public class RandomAsyncTask extends AsyncTask<String, Integer, String> {
+
+        private static final String TAG = "CustomAsyncTaskTag";
+
+        int result;
+        @Override
+        protected String doInBackground(String... params) {
+            Random rand = new Random();
+            result = rand.nextInt();
+            Log.d(TAG, "doInBackground: random " + result);
+            setRandMain(result);
+            return null;
+
+        }
+
+    }
 
     // Called from AsyncTask
     public void setRandMain(int i) {
-        tv.setText(i);
+        String s = Integer.toString(i);
+        tv.setText(s);
     }
 
     //Create a Java function to add the odd numbers in the “List” of numbers.
